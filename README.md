@@ -1,7 +1,12 @@
 # GameModProject
 Game Mod
+
 This is Elijah Brick's CoolMod!
+
 It is an attempt at a Mario Kart clone.
+
+To set up the Mod, take all of the files from the folder CoolFiles and add them to a folder called CoolMod in `...\steamapps\common\Quake 4`.
+
 To test everything, click Load Game and load the Canyon save!
 
 ## Common Deliverables:
