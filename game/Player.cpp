@@ -3893,7 +3893,7 @@ void idPlayer::UpdateConditions( void ) {
 	velocity = physicsObj.GetLinearVelocity() - physicsObj.GetPushedLinearVelocity();
 	fallspeed = velocity * physicsObj.GetGravityNormal();
 
- 	if ( influenceActive ) {
+ 	if (influenceActive) {
  		pfl.forward		= false;
  		pfl.backward	= false;
  		pfl.strafeLeft	= false;

@@ -23,6 +23,7 @@ extern const idEventDef EV_Thread_KillThread;
 extern const idEventDef EV_Thread_SetThreadName;
 extern const idEventDef EV_Thread_GetEntity;
 extern const idEventDef EV_Thread_Spawn;
+extern const idEventDef EV_Thread_UpdateHUD;
 extern const idEventDef EV_Thread_SetSpawnArg;
 extern const idEventDef EV_Thread_SpawnString;
 extern const idEventDef EV_Thread_SpawnFloat;
@@ -105,6 +106,7 @@ private:
 	void						Event_KillThread( const char *name );
 	void						Event_GetEntity( const char *name );
 	void						Event_Spawn( const char *classname );
+	void						Event_UpdateHUD(const char* myString);
 	void						Event_CopySpawnArgs( idEntity *ent );
 	void						Event_SetSpawnArg( const char *key, const char *value );
 	void						Event_SpawnString( const char *key, const char *defaultvalue );

@@ -27,6 +27,8 @@ const idEventDef EV_Thread_KillThread( "killthread", "s" );
 const idEventDef EV_Thread_SetThreadName( "threadname", "s" );
 const idEventDef EV_Thread_GetEntity( "getEntity", "s", 'e' );
 const idEventDef EV_Thread_Spawn( "spawn", "s", 'e' );
+const idEventDef EV_Thread_UpdateHUD("updateHUD", "s");
+const idEventDef EV_Thread_GiveItem("giveItem", "d");
 const idEventDef EV_Thread_CopySpawnArgs( "copySpawnArgs", "e" );
 const idEventDef EV_Thread_SetSpawnArg( "setSpawnArg", "ss" );
 const idEventDef EV_Thread_SpawnString( "SpawnString", "ss", 's' );
@@ -141,6 +143,8 @@ CLASS_DECLARATION( idClass, idThread )
 	EVENT( EV_Thread_SetThreadName,			idThread::Event_SetThreadName )
 	EVENT( EV_Thread_GetEntity,				idThread::Event_GetEntity )
 	EVENT( EV_Thread_Spawn,					idThread::Event_Spawn )
+	EVENT( EV_Thread_UpdateHUD,				idThread::Event_UpdateHUD)
+	EVENT( EV_Thread_GiveItem,				idThread::Event_GiveItem)
 	EVENT( EV_Thread_CopySpawnArgs,			idThread::Event_CopySpawnArgs )
 	EVENT( EV_Thread_SetSpawnArg,			idThread::Event_SetSpawnArg )
 	EVENT( EV_Thread_SpawnString,			idThread::Event_SpawnString )
@@ -1285,6 +1289,30 @@ void idThread::Event_Spawn( const char *classname ) {
 	gameLocal.SpawnEntityDef( spawnArgs, &ent );
 	ReturnEntity( ent );
 	spawnArgs.Clear();
+}
+
+/*
+================
+idThread::Event_UpdateHUD ELIDEBUG
+================
+*/
+void idThread::Event_UpdateHUD(const char* myString) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	player->hud->SetStateString("lap_count", myString);
+}
+
+/*
+================
+idThread::Event_GiveItem ELIDEBUG
+================
+*/
+void idThread::Event_GiveItem( int itemNum ) {
+	//idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* items[10] =		{"Mushroom", "3xMushroom", "Golden Mushroom",
+								"Green Shell", "3xGreen Shell",
+								"Red Shell", "3xRed Shell", "Blue Shell",
+								"Banana", "3xBanana"};
+	gameLocal.Printf("You got a %s, id=%d\n",items[itemNum], itemNum);
 }
 
 /*

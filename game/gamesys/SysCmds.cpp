@@ -2412,6 +2412,28 @@ static void Cmd_GameError_f( const idCmdArgs &args ) {
 	gameLocal.Error( "game error" );
 }
 
+/*
+==================
+Cmd_StartRace_f
+==================
+*/
+static void CountDown(){
+	gameLocal.Printf("Eureka!");
+}
+
+static void Cmd_StartRace_f(const idCmdArgs& args) {
+	const function_t* func = gameLocal.program.FindFunction("CountDown");
+	idThread* thread = new idThread(func);
+	thread->Start();
+	gameLocal.Printf("3");
+	thread->WaitSec(1);
+	gameLocal.Printf("2");
+	thread->WaitSec(1);
+	gameLocal.Printf("1");
+	thread->WaitSec(1);
+	gameLocal.Printf("GO!");
+}
+
 // RAVEN BEGIN
 // rjohnson: entity usage stats
 /*
@@ -3133,6 +3155,8 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "saveParticles",			Cmd_SaveParticles_f,		CMD_FL_GAME|CMD_FL_CHEAT,	"saves all lights to the .map file" );
 	cmdSystem->AddCommand( "clearLights",			Cmd_ClearLights_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"clears all lights" );
 	cmdSystem->AddCommand( "gameError",				Cmd_GameError_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"causes a game error" );
+
+	cmdSystem->AddCommand( "startRace",				Cmd_StartRace_f,			CMD_FL_GAME | CMD_FL_CHEAT, "attempts to start a race");
 
 // RAVEN BEGIN
 // rjohnson: entity usage stats

@@ -44,6 +44,7 @@ const int PMF_TIME_WATERJUMP	= 128;		// movementTime is waterjump
 const int PMF_ALL_TIMES			= (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK);
 
 int c_pmove = 0;
+float carAcceleration = 0;
 
 float idPhysics_Player::Pm_Accelerate( void ) {
 	return gameLocal.IsMultiplayer() ? PM_ACCELERATE_MP : PM_ACCELERATE_SP;
@@ -724,10 +725,25 @@ void idPhysics_Player::WalkMove( void ) {
 	viewForward.Normalize();
 	viewRight.Normalize();
 
-	wishvel = viewForward * command.forwardmove + viewRight * command.rightmove;
+	//gameLocal.Printf("WalkMove, carAcceleration = %f\n", carAcceleration);
+	int forwardOrBackward = 0;
+	if (command.forwardmove > 0) forwardOrBackward = 1; else forwardOrBackward = -1;
+	if (carAcceleration > 800) carAcceleration = 800;
+	if (carAcceleration < -800) carAcceleration = -800;
+	if (command.forwardmove!=0) {
+		carAcceleration += 10*forwardOrBackward;
+	}
+	else if(carAcceleration>0){
+		carAcceleration -= 10;
+	}
+	else if(carAcceleration<0){
+		carAcceleration += 10;
+	}
+
+	wishvel = viewForward * carAcceleration;// +viewRight * command.rightmove;
 	wishdir = wishvel;
 	wishspeed = wishdir.Normalize();
-	wishspeed *= scale;
+	//wishspeed *= scale;
 
 	// clamp the speed lower if wading or walking on the bottom
 	if ( waterLevel ) {
